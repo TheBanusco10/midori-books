@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="signInWithGoogle">Sign in</button>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script setup>
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
+import {auth} from "@/firebase";
+import VueCookies from "vue-cookies";
+
+const signInWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+
+    const {uid, displayName, photoURL} = (await signInWithPopup(auth, provider)).user;
+    // uid, displayName, photoURL
+    VueCookies.set('midori', {uid, displayName, photoURL}, '1d');
+  }catch (err) {
+    console.error(err.message);
   }
 }
+
 </script>
