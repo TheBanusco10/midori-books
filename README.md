@@ -1,4 +1,4 @@
-# midori
+# Midori books
 
 ## Project setup
 ```
@@ -15,5 +15,9 @@ npm run serve
 npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Compiles Tailwind styles
+```
+npm run styles
+```
+
+Don't forget to configure .env file :)
