@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="w-32">
     <img :src="bookData.imageURL"
          :alt="bookData.title + ' cover image'"
-         class="w-32 mx-auto mb-4 rounded shadow"
+         class="mb-2 rounded shadow"
     >
-    <h2>
+    <p class="w-full capitalize text-center"
+       :title="bookData.title"
+    >
       {{ bookData.title }}
-    </h2>
+    </p>
   </div>
 </template>
 

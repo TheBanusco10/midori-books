@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from "@/store";
+
 import HomeView from '../views/HomeView.vue'
 
 const routes = [
@@ -15,12 +17,18 @@ const routes = [
   {
     path: '/books',
     name: 'books',
-    component: () => import(/* webpackChunkName: "books" */ '../views/BooksView.vue')
+    component: () => import(/* webpackChunkName: "books" */ '../views/BooksView.vue'),
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/books/add',
     name: 'addBook',
-    component: () => import(/* webpackChunkName: "addBook" */ '../views/AddBookView.vue')
+    component: () => import(/* webpackChunkName: "addBook" */ '../views/AddBookView.vue'),
+    meta: {
+      requiresAuth: true,
+    }
   },
   // {
   //   path: '/books/edit/:id',
@@ -33,5 +41,9 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+router.beforeEach(to => {
+  if (to.meta.requiresAuth && !store.getters.user) return { name: 'home' }
+});
 
 export default router

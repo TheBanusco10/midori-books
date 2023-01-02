@@ -5,9 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "styles": "npx tailwindcss -i src/assets/css/styles.css -o public/styles.css --watch"
+    "styles": "npx tailwindcss -i src/assets/css/styles.css -o public/styles.css --watch",
+    "local-server": "npm run build && npx http-server dist"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.0.13",
     "@vueform/multiselect": "^2.5.8",
     "animate.css": "^4.1.1",
     "core-js": "^3.8.3",
