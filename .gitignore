@@ -5,7 +5,7 @@ public/styles.css
 
 
 # local env files
-.env.js
+.env
 .env.local
 .env.*.local
 
