@@ -1,5 +1,5 @@
 <template>
-  <input class="border rounded p-2"
+  <input class="w-full border rounded p-2 mb-4 focus:outline-none focus:border-emerald-500 transition duration-300"
          @input="updateInput"
          :value="modelValue"
   >

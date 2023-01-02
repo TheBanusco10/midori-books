@@ -22,11 +22,11 @@ const routes = [
     name: 'addBook',
     component: () => import(/* webpackChunkName: "addBook" */ '../views/AddBookView.vue')
   },
-  {
-    path: '/books/edit/:id',
-    name: 'books',
-    component: () => import(/* webpackChunkName: "books" */ '../views/BooksView.vue')
-  }
+  // {
+  //   path: '/books/edit/:id',
+  //   name: 'editBook',
+  //   component: () => import(/* webpackChunkName: "editBook" */ '../views/BooksView.vue')
+  // }
 ]
 
 const router = createRouter({
