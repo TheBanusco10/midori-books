@@ -5,12 +5,15 @@
               @results="getResults"
    />
    <div id="filters"
-        class="my-4"
+        class="mt-4 mb-6"
         v-if="!loading"
    >
-     <p>
-       All {{ books.length }}
-     </p>
+     <Filter :total-items="toRaw(books)"
+             :filter-items="uniqueBookCategories"
+             @results="getResults"
+             @on-remove-filters="onRemoveFilters"
+             class="text-center"
+     />
    </div>
    <div class="flex flex-wrap justify-center gap-4"
    >
@@ -41,11 +44,14 @@ import {db} from "@/firebase";
 import BookCard from "@/components/BookCard";
 import Loader from "@/components/Loader";
 import Searchbar from "@/components/Searchbar";
+import Filter from "@/components/Filter.vue";
 
 const store = useStore();
 const user = computed(() => store.getters.user);
 const books = ref([]);
-let booksSearched = [];
+let uniqueBookCategories = [];
+const booksSearched = ref([]);
+
 const loading = ref(true);
 const searching = ref(false);
 
@@ -59,6 +65,8 @@ const getBooks = async () => {
       books.value.push(doc.data());
     });
 
+    uniqueBookCategories = getBookCategories(books.value);
+
     loading.value = false;
   }catch (err) {
     console.error(err.message);
@@ -68,10 +76,32 @@ const getBooks = async () => {
 const getResults = (results) => {
   if (results.length > 0) {
     searching.value = true;
-    booksSearched = results;
+    booksSearched.value = results;
   }else {
     searching.value = false;
   }
+}
+
+/**
+ * Loops for each book and gets unique categories
+ *
+ * @returns Array
+ */
+const getBookCategories = (books) => {
+  const categories = [];
+
+  // Getting each category from each book
+  books.forEach(el => {
+    el.categories.filter((item) => categories.push(item));
+  });
+
+  // Removing duplicates
+  return [...new Set(categories)];
+}
+
+const onRemoveFilters = () => {
+  searching.value = false;
+  booksSearched.value = [];
 }
 
 onMounted(() => {

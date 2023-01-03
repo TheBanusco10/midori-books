@@ -1,30 +1,10 @@
 <template>
   <div class="home">
-    <Searchbar :total-items="items"
-               @results="getResults"
-    />
+    <Modal />
   </div>
 </template>
 
 <script setup>
-import Searchbar from "@/components/Searchbar";
+import Modal from "@/components/tags/Modal.vue";
 
-const items = [
-  {
-    imageURL: 'https://harrypotter.jpg',
-    title: 'Harry Potter'
-  },
-  {
-    imageURL: 'https://it.jpg',
-    title: 'It'
-  },
-  {
-    imageURL: 'https://seanunciaun.jpg',
-    title: 'Se anuncia un asesinato'
-  }
-]
-
-const getResults = (results) => {
-  console.log(results);
-}
 </script>

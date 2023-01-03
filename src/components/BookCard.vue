@@ -3,6 +3,7 @@
     <img :src="bookData.imageURL"
          :alt="bookData.title + ' cover image'"
          class="mb-2 rounded shadow"
+         loading="lazy"
     >
     <p class="w-full capitalize text-center"
        :title="bookData.title"
