@@ -4,11 +4,17 @@
     lg:border-b-0 lg:border-r lg:pr-3"
     >
       <!--https://kbimages1-a.akamaihd.net/909b88f6-425d-4535-9925-8e9bcfa90f9b/1200/1200/False/harry-potter-y-la-piedra-filosofal-1.jpg-->
-      <img class="w-32 mx-auto mb-4 rounded shadow" :src="book.imageURL" alt="Book image">
+      <img class="w-32 h-48 mx-auto mb-4 rounded shadow object-cover"
+           :src="book.imageURL || require('@/assets/img/default-placeholder.png')"
+           alt="Book image"
+           @error="onImageError"
+      >
       <Input type="url"
              v-model="book.imageURL"
              placeholder="Image URL"
+             class="!mb-2"
       />
+      <span class="inline-block text-sm text-gray-500 mb-3 pl-1 italic">Paste your image URL here</span>
     </div>
     <div class="w-full lg:w-10/12 lg:pl-3">
       <Input type="text"
@@ -114,5 +120,10 @@ const addBook = async () => {
   }catch (err) {
     console.error(err.message);
   }
+}
+
+const onImageError = () => {
+  alert('URL not valid. Please, try another one');
+  book.value.imageURL = null;
 }
 </script>

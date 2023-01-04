@@ -1,19 +1,12 @@
 <template>
-  <section class="w-full flex justify-center items-center">
-    <div class="relative">
-      <input type="text"
-             class="shadow border-2 rounded-lg p-2 mr-5 pl-8 outline-none focus:border-emerald-500 hover:shadow transition duration-300"
-             placeholder="Search..."
-             @input="searching"
-      >
-      <MagnifyingGlassIcon class="w-5 h-5 absolute top-1/2 -translate-y-2/4 left-2"/>
-    </div>
-    <button @click="router.push('/books/add')"
-            class="bg-emerald-600 shadow-lg rounded-full p-3 hover:bg-emerald-500 transition duration-300"
+  <div class="relative">
+    <input type="text"
+           class="shadow border-2 rounded-lg p-2 mr-5 pl-8 outline-none focus:border-emerald-500 hover:shadow transition duration-300"
+           placeholder="Search for Title or Author"
+           @input="searching"
     >
-      <PlusIcon class="w-5 h-5 text-white"/>
-    </button>
-  </section>
+    <MagnifyingGlassIcon class="w-5 h-5 absolute top-1/2 -translate-y-2/4 left-2"/>
+  </div>
 </template>
 
 <script setup>
@@ -40,7 +33,10 @@ const searching = (evt) => {
   if (itemSearched.length < 2 || props.totalItems.length === 0)
     return emits('results', []);
 
-  const results = props.totalItems.filter(el => el.title.toLocaleLowerCase().includes(itemSearched.toLocaleLowerCase()));
+  const results = props.totalItems.filter(el =>
+      el.title.toLocaleLowerCase().includes(itemSearched.toLocaleLowerCase()) ||
+      el.author.toLocaleLowerCase().includes(itemSearched.toLocaleLowerCase())
+  );
 
   emits('results', results);
 }

@@ -1,12 +1,19 @@
 <template>
  <Container>
-   <Searchbar class="my-4"
-              :total-items="toRaw(books)"
-              @results="getResults"
-   />
+   <section class="w-full flex justify-center items-center">
+     <Searchbar class="my-4"
+                :total-items="toRaw(books)"
+                @results="getResults"
+     />
+     <button @click="router.push('/books/add')"
+             class="bg-emerald-600 shadow-lg rounded-full p-3 hover:bg-emerald-500 transition duration-300"
+     >
+       <PlusIcon class="w-5 h-5 text-white"/>
+     </button>
+   </section>
    <div id="filters"
         class="mt-4 mb-6"
-        v-if="!loading"
+        v-if="!loadingBooks"
    >
      <Filter :total-items="toRaw(books)"
              :filter-items="uniqueBookCategories"
@@ -17,25 +24,29 @@
    </div>
    <div class="flex flex-wrap justify-center gap-4"
    >
-     <Loader v-if="loading && !searching" />
+     <Loader v-if="loadingBooks && !searching" />
      <!--User's books-->
      <BookCard v-for="(book, index) in books"
                :book-data="book"
+               :is-loading="loadingAction"
                :key="index"
-               v-if="!loading && !searching"
+               v-if="!loadingBooks && !searching"
+               @on-remove-book="onRemoveBook"
      />
      <!--Books searched-->
      <BookCard v-for="(book, index) in booksSearched"
                :book-data="book"
+               :is-loading="loadingAction"
                :key="index"
-               v-if="!loading && searching"
+               v-if="!loadingBooks && searching"
+               @on-remove-book="onRemoveBook"
      />
    </div>
  </Container>
 </template>
 
 <script setup>
-import {query, getDocs, collection, where} from "firebase/firestore";
+import {query, getDocs, collection, where, doc, deleteDoc, getDoc} from "firebase/firestore";
 import {useStore} from "vuex";
 import {computed, onMounted, ref, toRaw} from "vue";
 
@@ -45,29 +56,37 @@ import BookCard from "@/components/BookCard";
 import Loader from "@/components/Loader";
 import Searchbar from "@/components/Searchbar";
 import Filter from "@/components/Filter.vue";
+import {PlusIcon} from "@heroicons/vue/24/outline";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const store = useStore();
+
 const user = computed(() => store.getters.user);
 const books = ref([]);
 let uniqueBookCategories = [];
 const booksSearched = ref([]);
 
-const loading = ref(true);
+const loadingBooks = ref(true);
+const loadingAction = ref(false);
 const searching = ref(false);
 
 const getBooks = async () => {
   try {
-    loading.value = true;
+    loadingBooks.value = true;
     const q = query(collection(db, 'books'), where('uid', '==', user.value.uid));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach(doc => {
-      books.value.push(doc.data());
+      books.value.push({
+        ...doc.data(),
+        id: doc.id
+      });
     });
 
     uniqueBookCategories = getBookCategories(books.value);
 
-    loading.value = false;
+    loadingBooks.value = false;
   }catch (err) {
     console.error(err.message);
   }
@@ -102,6 +121,30 @@ const getBookCategories = (books) => {
 const onRemoveFilters = () => {
   searching.value = false;
   booksSearched.value = [];
+}
+
+const onRemoveBook = async (bookID) => {
+  try {
+    loadingAction.value = true;
+
+    const removeBook = confirm('Are you sure you want to remove the book with ID '+bookID+' ?');
+
+    if (!removeBook) return;
+
+    const bookRef = doc(db, 'books', bookID);
+    const book = getDoc(bookRef);
+
+    if (!(await book).exists()) return;
+
+    await deleteDoc(bookRef);
+
+    alert('Book removed');
+  }catch (err) {
+    console.error(err.message);
+  }finally {
+    loadingAction.value = false;
+  }
+
 }
 
 onMounted(() => {
