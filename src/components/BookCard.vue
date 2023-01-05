@@ -1,6 +1,6 @@
 <template>
-  <div class="w-32 relative">
-    <div class="absolute w-full bg-black bg-opacity-75 text-white flex justify-end rounded-t">
+  <div class="w-32 relative rounded overflow-hidden">
+    <div class="absolute w-full bg-black bg-opacity-75 text-white flex justify-end">
       <button @click="removeBook"
               :disabled="isLoading"
       >
