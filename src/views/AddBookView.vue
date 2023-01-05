@@ -1,4 +1,9 @@
 <template>
+  <Header>
+    <template v-slot:title>
+      <p class="text-center text-2xl -mt-3">New book</p>
+    </template>
+  </Header>
   <Container class="flex flex-wrap justify-center mt-10">
     <div class="w-full lg:w-2/12 mb-4 border-b lg:border-r
     lg:border-b-0 lg:border-r lg:pr-3"
@@ -66,6 +71,7 @@ import Multiselect from "@vueform/multiselect";
 import Container from "@/components/tags/Container";
 import Input from "@/components/tags/Input";
 import {useRouter} from "vue-router";
+import Header from "@/components/tags/Header.vue";
 
 const store = useStore();
 const router = useRouter();

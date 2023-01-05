@@ -1,0 +1,21 @@
+<template>
+  <section class="h-20 p-2 bg-emerald-700 rounded-b-3xl text-white">
+    <div>
+      <button>
+        <ArrowLeftIcon class="p-1 w-7 h-7 rounded-full hover:bg-gray-100 hover:bg-opacity-20 transition duration-300"
+                       @click="router.back()"
+        />
+      </button>
+    </div>
+    <div>
+      <slot name="title" />
+    </div>
+  </section>
+</template>
+
+<script setup>
+import {ArrowLeftIcon} from "@heroicons/vue/24/outline";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+</script>
