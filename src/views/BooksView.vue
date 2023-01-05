@@ -63,7 +63,9 @@ const router = useRouter();
 const store = useStore();
 
 const user = computed(() => store.getters.user);
-const books = ref([]);
+const books = computed(() => {
+  return store.getters.books;
+});
 let uniqueBookCategories = [];
 const booksSearched = ref([]);
 
@@ -74,11 +76,12 @@ const searching = ref(false);
 const getBooks = async () => {
   try {
     loadingBooks.value = true;
+    store.commit('setBooks', []);
     const q = query(collection(db, 'books'), where('uid', '==', user.value.uid));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach(doc => {
-      books.value.push({
+      store.commit('addBook', {
         ...doc.data(),
         id: doc.id
       });
@@ -104,6 +107,7 @@ const getResults = (results) => {
 /**
  * Loops for each book and gets unique categories
  *
+ * @param books
  * @returns Array
  */
 const getBookCategories = (books) => {
@@ -118,6 +122,25 @@ const getBookCategories = (books) => {
   return [...new Set(categories)];
 }
 
+/**
+ * Removes a book from Firestore by ID
+ *
+ * @param bookID
+ * @returns {Promise<void>}
+ */
+const removeBook = async (bookID) => {
+  try {
+    const bookRef = doc(db, 'books', bookID);
+    const book = getDoc(bookRef);
+
+    if (!(await book).exists()) return;
+
+    await deleteDoc(bookRef);
+  }catch (err) {
+    console.error(err.message);
+  }
+}
+
 const onRemoveFilters = () => {
   searching.value = false;
   booksSearched.value = [];
@@ -127,16 +150,13 @@ const onRemoveBook = async (bookID) => {
   try {
     loadingAction.value = true;
 
-    const removeBook = confirm('Are you sure you want to remove the book with ID '+bookID+' ?');
+    const removingBook = confirm('Are you sure you want to remove the book with ID '+bookID+' ?');
 
-    if (!removeBook) return;
+    if (!removingBook) return;
 
-    const bookRef = doc(db, 'books', bookID);
-    const book = getDoc(bookRef);
+    await removeBook(bookID);
 
-    if (!(await book).exists()) return;
-
-    await deleteDoc(bookRef);
+    store.commit('removeBook', bookID);
 
     alert('Book removed');
   }catch (err) {

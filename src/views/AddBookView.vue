@@ -65,8 +65,10 @@ import Multiselect from "@vueform/multiselect";
 
 import Container from "@/components/tags/Container";
 import Input from "@/components/tags/Input";
+import {useRouter} from "vue-router";
 
 const store = useStore();
+const router = useRouter();
 
 const user = computed(() => store.getters.user);
 const categories = [
@@ -102,12 +104,21 @@ const addBook = async () => {
     // Loading
     loading.value = true;
 
-    const data = await addDoc(collection(db, 'books'), {
+    const bookObject = {
       ...book.value,
       uid: user.value.uid
+    }
+
+    const data = await addDoc(collection(db, 'books'), bookObject);
+
+    store.commit('addBook', {
+      ...bookObject,
+      id: data.id
     });
 
-    alert(`Book ${data.id} stored`);
+    await router.push({name: 'books'});
+
+    alert(`Book stored`);
 
     // Empty book data
     book.value.title = '';

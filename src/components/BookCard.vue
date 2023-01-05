@@ -12,10 +12,11 @@
         <PencilSquareIcon class="p-1 w-7 h-7" />
       </button>
     </div>
-    <img :src="bookData.imageURL"
+    <img :src="imageLoaded ? bookData.imageURL : require('@/assets/img/default-placeholder.png')"
          :alt="bookData.title + ' cover image'"
-         class="mb-2 rounded shadow"
+         class="mb-2 rounded shadow-lg"
          loading="lazy"
+         @load="onImageLoaded"
     >
     <p class="w-full capitalize text-center"
        :title="bookData.title"
@@ -27,6 +28,7 @@
 
 <script setup>
 import {TrashIcon, PencilSquareIcon} from "@heroicons/vue/24/outline";
+import {ref} from "vue";
 
 const emit = defineEmits(['onRemoveBook', 'onEditBook'])
 const props = defineProps({
@@ -43,6 +45,8 @@ const props = defineProps({
   }
 });
 
+const imageLoaded = ref(false);
+
 const removeBook = () => {
   console.log('Removing book', props.bookData.id);
   emit('onRemoveBook', props.bookData.id);
@@ -51,5 +55,9 @@ const removeBook = () => {
 const editBook = () => {
   console.log('Editing book', props.bookData.id);
   emit('onEditBook', props.bookData.id);
+}
+
+const onImageLoaded = () => {
+  imageLoaded.value = true;
 }
 </script>

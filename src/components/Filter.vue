@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="flex flex-wrap justify-center">
     <span class="p-1"
     >
       <FunnelIcon class="inline-block w-5 h-5" />
