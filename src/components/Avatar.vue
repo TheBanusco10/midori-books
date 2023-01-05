@@ -1,7 +1,7 @@
 <template>
   <section
       class="max-w-4/12 flex items-center relative border-b-2 border-b-transparent pb-2 select-none hover:cursor-pointer hover:border-emerald-500 transition duration-300"
-      @click="showMenu = !showMenu"
+      @click.stop="showMenu = !showMenu"
   >
     <img :src="user.photoURL"
          :alt="user.displayName"
@@ -38,7 +38,7 @@
 
 <script setup>
 
-import {computed, ref} from "vue";
+import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import {useRoute} from "vue-router";
 import {signOut} from "firebase/auth";
@@ -71,4 +71,18 @@ const signOutApp = async () => {
     console.error(err.message);
   }
 }
+
+const closeMenu = () => {
+  showMenu.value = false;
+
+}
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', closeMenu);
+});
+
+onMounted(() => {
+  document.addEventListener('click', closeMenu);
+});
+
 </script>

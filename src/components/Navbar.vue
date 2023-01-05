@@ -19,8 +19,11 @@ import Avatar from "@/components/Avatar";
 import {GoogleAuthProvider, signInWithPopup, signOut} from "firebase/auth";
 import {auth} from "@/firebase";
 import VueCookies from "vue-cookies";
+import {useRouter} from "vue-router";
 
 const store = useStore();
+const router = useRouter();
+
 const user = computed(() => store.getters.user);
 
 const signInWithGoogle = async () => {
@@ -37,6 +40,8 @@ const signInWithGoogle = async () => {
 
     VueCookies.set('midori-books', userObject, '1d');
     store.commit('setUser', userObject);
+
+    await router.push({name: 'books'});
   }catch (err) {
     console.error(err.message);
   }

@@ -1,15 +1,19 @@
 <template>
-  <div class="w-32 relative rounded overflow-hidden">
-    <div class="absolute w-full bg-black bg-opacity-75 text-white flex justify-end">
+  <div class="w-32 md:w-44 relative rounded overflow-hidden">
+    <div class="group absolute md:opacity-70 md:p-1 w-full bg-black bg-opacity-75 text-white flex justify-end
+    hover:opacity-100 transition duration-300"
+    >
       <button @click="removeBook"
               :disabled="isLoading"
+              class="md:opacity-70 group-hover:opacity-100 transition duration-300"
       >
-        <TrashIcon class="p-1 w-7 h-7" />
+        <TrashIcon class="p-1 w-8 h-8" />
       </button>
       <button @click="editBook"
               :disabled="isLoading"
+              class="md:opacity-70 group-hover:opacity-100 transition duration-300"
       >
-        <PencilSquareIcon class="p-1 w-7 h-7" />
+        <PencilSquareIcon class="p-1 w-8 h-8" />
       </button>
     </div>
     <img :src="imageLoaded ? bookData.imageURL : require('@/assets/img/default-placeholder.png')"
