@@ -77,25 +77,7 @@ const store = useStore();
 const router = useRouter();
 
 const user = computed(() => store.getters.user);
-const categories = [
-  'Adventure stories',
-  'Classics',
-  'Crime',
-  'Fairy tales, fables, and folk tales',
-  'Fantasy',
-  'Historical fiction',
-  'Horror',
-  'Humour and satire',
-  'Literary fiction',
-  'Mystery',
-  'Poetry',
-  'Plays',
-  'Romance',
-  'Science fiction',
-  'Short stories',
-  'Thrillers',
-  'War',
-];
+const categories = store.getters.bookCategories;
 const book = ref({
   title: '',
   author: '',

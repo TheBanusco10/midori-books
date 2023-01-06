@@ -23,6 +23,14 @@ const routes = [
     }
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: () => import(/* webpackChunkName: "profile" */ '../views/ProfileView.vue'),
+    meta: {
+      requiresAuth: true,
+    }
+  },
+  {
     path: '/books/add',
     name: 'addBook',
     component: () => import(/* webpackChunkName: "addBook" */ '../views/AddBookView.vue'),

@@ -18,7 +18,7 @@
     </div>
     <img :src="imageLoaded ? bookData.imageURL : require('@/assets/img/default-placeholder.png')"
          :alt="bookData.title + ' cover image'"
-         class="mb-2 rounded shadow-lg"
+         class="w-32 h-48 md:h-auto md:w-auto object-cover mb-2 rounded shadow-lg"
          loading="lazy"
          @load="onImageLoaded"
     >
@@ -52,7 +52,6 @@ const props = defineProps({
 const imageLoaded = ref(false);
 
 const removeBook = () => {
-  console.log('Removing book', props.bookData.id);
   emit('onRemoveBook', props.bookData.id);
 }
 
