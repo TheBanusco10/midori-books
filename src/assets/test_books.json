@@ -1,0 +1,16 @@
+[
+  {
+    "author": "Test author",
+    "categories": ["Fantasy"],
+    "title": "Test book 1",
+    "imageURL": "https://via.placeholder.com/128",
+    "synopsis": "Book synopsis"
+  },
+  {
+    "author": "Test author",
+    "categories": ["Romance, Crime"],
+    "title": "Test book 2",
+    "imageURL": "https://via.placeholder.com/128",
+    "synopsis": "Book synopsis"
+  }
+]
