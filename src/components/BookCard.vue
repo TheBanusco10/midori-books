@@ -56,7 +56,6 @@ const removeBook = () => {
 }
 
 const editBook = () => {
-  console.log('Editing book', props.bookData.id);
   emit('onEditBook', props.bookData.id);
 }
 
