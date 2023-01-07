@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/books',
     name: 'books',
-    component: () => import(/* webpackChunkName: "books" */ '../views/BooksView.vue'),
+    component: () => import(/* webpackChunkName: "books" */ '../views/books/BooksView.vue'),
     meta: {
       requiresAuth: true,
     }
@@ -33,16 +33,16 @@ const routes = [
   {
     path: '/books/add',
     name: 'addBook',
-    component: () => import(/* webpackChunkName: "addBook" */ '../views/AddBookView.vue'),
+    component: () => import(/* webpackChunkName: "addBook" */ '../views/books/AddBookView.vue'),
     meta: {
       requiresAuth: true,
     }
   },
-  // {
-  //   path: '/books/edit/:id',
-  //   name: 'editBook',
-  //   component: () => import(/* webpackChunkName: "editBook" */ '../views/BooksView.vue')
-  // }
+  {
+    path: '/books/edit/:id',
+    name: 'editBook',
+    component: () => import(/* webpackChunkName: "editBook" */ '../views/books/EditBookView.vue')
+  }
 ]
 
 const router = createRouter({
