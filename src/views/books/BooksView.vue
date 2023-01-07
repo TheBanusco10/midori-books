@@ -32,6 +32,7 @@
                :key="index"
                v-if="!loadingBooks && !searching"
                @on-remove-book="onRemoveBook"
+               @on-edit-book="onEditBook"
      />
      <!--Books searched-->
      <BookCard v-for="(book, index) in booksSearched"
@@ -40,6 +41,7 @@
                :key="index"
                v-if="!loadingBooks && searching"
                @on-remove-book="onRemoveBook"
+               @on-edit-book="onEditBook"
      />
    </div>
  </Container>
@@ -165,6 +167,10 @@ const onRemoveBook = async (bookID) => {
     loadingAction.value = false;
   }
 
+}
+
+const onEditBook = bookID => {
+  router.push({ name: 'editBook', params: { id: bookID } });
 }
 
 onMounted(() => {
