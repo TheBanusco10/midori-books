@@ -28,7 +28,7 @@
       />
       <textarea placeholder="Synopsis"
                 v-model="book.synopsis"
-                class="w-full border rounded p-2 mb-4 h-33 max-h-44 focus:outline-none focus:border-emerald-500
+                class="w-full border rounded p-2 mb-4 h-44 max-h-44 focus:outline-none focus:border-emerald-500
                 transition duration-300"
       ></textarea>
       <Input type="text"
@@ -66,11 +66,11 @@ import {computed, ref} from "vue";
 import {addDoc, collection} from "firebase/firestore";
 import {useStore} from "vuex";
 import {db} from "@/firebase";
-import Multiselect from "@vueform/multiselect";
-
-import Container from "@/components/tags/Container";
-import Input from "@/components/tags/Input";
 import {useRouter} from "vue-router";
+
+import Multiselect from "@vueform/multiselect";
+import Container from "@/components/tags/Container.vue";
+import Input from "@/components/tags/Input.vue";
 import Header from "@/components/tags/Header.vue";
 
 const store = useStore();

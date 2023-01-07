@@ -50,11 +50,11 @@ import {query, getDocs, collection, where, doc, deleteDoc, getDoc} from "firebas
 import {useStore} from "vuex";
 import {computed, onMounted, ref, toRaw} from "vue";
 
-import Container from "@/components/tags/Container";
+import Container from "@/components/tags/Container.vue";
 import {db} from "@/firebase";
-import BookCard from "@/components/BookCard";
-import Loader from "@/components/Loader";
-import Searchbar from "@/components/Searchbar";
+import BookCard from "@/components/BookCard.vue";
+import Loader from "@/components/Loader.vue";
+import Searchbar from "@/components/Searchbar.vue";
 import Filter from "@/components/Filter.vue";
 import {PlusIcon} from "@heroicons/vue/24/outline";
 import {useRouter} from "vue-router";
