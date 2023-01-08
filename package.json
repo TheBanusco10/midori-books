@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "styles": "npx tailwindcss -i src/assets/css/styles.css -o public/styles.css --watch",
-    "local-server": "npm run build && npx http-server dist"
+    "local-server": "npm run build && npx http-server dist",
+    "update_app_version_patch": "grunt update_app_version:patch && npm run build",
+    "update_app_version_minor": "grunt update_app_version:minor && npm run build"
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.13",
@@ -28,6 +30,8 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "grunt": "^1.5.3",
+    "grunt-text-replace": "^0.4.0",
     "tailwindcss": "^3.2.4"
   }
 }

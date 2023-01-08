@@ -4,6 +4,7 @@ import VueCookies from "vue-cookies";
 
 export default createStore({
   state: {
+    APP_VERSION: process.env.VUE_APP_VERSION,
     user: VueCookies.get('midori-books') || null,
     books: [],
     bookCategories: [
@@ -27,6 +28,9 @@ export default createStore({
     ],
   },
   getters: {
+    APP_VERSION: state => {
+      return state.APP_VERSION;
+    },
     user: state => {
       return state.user;
     },
