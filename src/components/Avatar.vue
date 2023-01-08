@@ -1,6 +1,6 @@
 <template>
   <section
-      class="max-w-4/12 flex items-center relative border-b-2 border-b-transparent pb-2 select-none hover:cursor-pointer hover:border-emerald-500 transition duration-300"
+      :class="[{'!border-emerald-500': showMenu},'max-w-4/12 flex items-center relative border-b-2 border-b-transparent pb-2 select-none hover:cursor-pointer hover:border-emerald-500 transition duration-300']"
       @click.stop="showMenu = !showMenu"
   >
     <img :src="user.photoURL"
@@ -19,7 +19,7 @@
            v-if="showMenu"
       >
         <ul class="text-start">
-          <li :class="[route.fullPath === item.link ? 'bg-emerald-500 text-white hover:!bg-emerald-400' : '', 'border-b hover:bg-gray-100 hover:cursor-pointer transition duration-300']"
+          <li :class="[{'bg-emerald-500 text-white hover:!bg-emerald-400': route.fullPath === item.link }, 'border-b hover:bg-gray-100 hover:cursor-pointer transition duration-300']"
               v-for="(item, index) in navItems"
               :key="index"
           >

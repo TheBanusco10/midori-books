@@ -38,10 +38,10 @@ const signInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider();
 
-    const {uid, displayName, photoURL} = (await signInWithPopup(auth, provider)).user;
+    const {uid, displayName, photoURL, email} = (await signInWithPopup(auth, provider)).user;
 
     const userObject = {
-      uid, displayName, photoURL
+      uid, displayName, photoURL, email
     }
 
     VueCookies.set('midori-books', userObject, '1d');
