@@ -50,13 +50,14 @@
 
 import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import {useStore} from "vuex";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {signOut} from "firebase/auth";
 import {auth} from "@/firebase";
 import VueCookies from "vue-cookies";
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 
 const showMenu = ref(false);
 const user = computed(() => store.getters.user);
@@ -77,6 +78,8 @@ const signOutApp = async () => {
 
     VueCookies.remove('midori-books');
     store.commit('setUser', null);
+
+    await router.push({name: 'home'})
   }catch (err) {
     console.error(err.message);
   }

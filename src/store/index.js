@@ -1,6 +1,9 @@
 import { createStore } from 'vuex'
 
 import VueCookies from "vue-cookies";
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {auth} from "@/firebase";
+import router from "@/router";
 
 export default createStore({
   state: {
@@ -60,7 +63,25 @@ export default createStore({
     }
   },
   actions: {
+    signInWithGoogle: async ({state, commit}) => {
+      if (state.user) return;
+
+      try {
+        const provider = new GoogleAuthProvider();
+
+        const {uid, displayName, photoURL, email} = (await signInWithPopup(auth, provider)).user;
+
+        const userObject = {
+          uid, displayName, photoURL, email
+        }
+
+        VueCookies.set('midori-books', userObject, '1d');
+        commit('setUser', userObject);
+
+        await router.push({name: 'books'});
+      }catch (err) {
+        console.error(err.message);
+      }
+    }
   },
-  modules: {
-  }
 })

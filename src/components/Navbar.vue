@@ -10,7 +10,7 @@
     <Avatar v-if="user"/>
     <button class="border-0 border-b-2 border-gray-300 p-2 mr-2 hover:border-emerald-500 transition duration-300"
             v-else
-            @click="signInWithGoogle"
+            @click="store.dispatch('signInWithGoogle')"
     >
       Sign In
     </button>
@@ -31,25 +31,4 @@ const store = useStore();
 const router = useRouter();
 
 const user = computed(() => store.getters.user);
-
-const signInWithGoogle = async () => {
-  if (store.getters.user) return;
-
-  try {
-    const provider = new GoogleAuthProvider();
-
-    const {uid, displayName, photoURL, email} = (await signInWithPopup(auth, provider)).user;
-
-    const userObject = {
-      uid, displayName, photoURL, email
-    }
-
-    VueCookies.set('midori-books', userObject, '1d');
-    store.commit('setUser', userObject);
-
-    await router.push({name: 'books'});
-  }catch (err) {
-    console.error(err.message);
-  }
-}
 </script>

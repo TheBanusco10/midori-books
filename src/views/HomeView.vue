@@ -1,6 +1,6 @@
 <template>
   <section class="relative">
-    <img class="brightness-50"
+    <img class="brightness-50 lg:w-full lg:h-screen"
          :src="require('@/assets/img/books-banner.webp')"
          alt="Banner"
     >
@@ -13,6 +13,7 @@
       <button v-if="!user"
               class="w-40 mx-auto mt-10 p-1 text-white border border-white hover:bg-white hover:text-black
               transition duration-300"
+              @click="store.dispatch('signInWithGoogle')"
       >
         See more
       </button>
@@ -25,15 +26,38 @@
       </router-link>
     </div>
   </section>
+  <Container class="flex flex-wrap justify-center text-center">
+    <Card class="w-7/12 m-4 lg:my-10 lg:w-2/12">
+      <div>
+        <BookOpenIcon class="w-10 h-10 mx-auto" />
+      </div>
+      <div class="p-2">
+        <p>Manage your books easily. Choose the title, author, categories and much more. Filter by categories and see
+        how many books you have read.</p>
+      </div>
+    </Card>
+    <Card class="w-7/12 m-4 lg:my-10 lg:w-2/12">
+      <div>
+        <DevicePhoneMobileIcon class="w-10 h-10 mx-auto" />
+      </div>
+      <div class="p-2">
+        <p>Midori Books is a PWA. A web application that you can "install" on your device (mobile, desktop) without any
+        disk space usage, and it only takes a few seconds to install it. Bring all your books information with you wherever
+        you are.</p>
+      </div>
+    </Card>
+  </Container>
 </template>
 
 <script setup>
 import {useStore} from "vuex";
 import {computed} from "vue";
 
+import {BookOpenIcon, DevicePhoneMobileIcon} from "@heroicons/vue/24/outline";
+import Container from "@/components/tags/Container.vue";
+import Card from "@/components/tags/Card.vue";
+
 const store = useStore();
 
 const user = computed(() => store.getters.user);
-
-// TODO: implement signIn method to store and use it here
 </script>
