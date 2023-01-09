@@ -53,7 +53,7 @@
         </template>
       </multiselect>
       <button @click="addBook"
-              :class="[loading ? 'opacity-50 pointer-events-none' : '', `w-full mt-4 text-white p-2 rounded bg-emerald-500
+              :class="[loading ? 'opacity-50 pointer-events-none' : '', `w-full my-4 text-white p-2 rounded bg-emerald-500
               hover:bg-emerald-600 transition duration`]"
               :disabled="loading"
       >Add</button>

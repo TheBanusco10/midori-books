@@ -1,5 +1,5 @@
 <template>
-  <div class="w-32 md:w-44 relative rounded overflow-hidden">
+  <div class="w-32 md:w-44 relative rounded overflow-hidden animate__animated animate__fadeIn animate__faster">
     <div class="group absolute md:opacity-70 md:p-1 w-full bg-black bg-opacity-75 text-white flex justify-end
     hover:opacity-100 transition duration-300"
     >

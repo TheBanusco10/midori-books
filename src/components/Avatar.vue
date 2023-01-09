@@ -19,10 +19,14 @@
            v-if="showMenu"
       >
         <ul class="text-start">
-          <li class="p-2 text-xs text-gray-400 text-center whitespace-nowrap overflow-hidden text-ellipsis">
+          <li class="p-2 text-xs cursor-default text-gray-400 text-center whitespace-nowrap overflow-hidden text-ellipsis"
+              @click.stop
+          >
             {{ user.email }}
           </li>
-          <li class="p-2 text-xs text-gray-400 text-center border-b">
+          <li class="p-2 text-xs cursor-default text-gray-400 text-center border-b"
+              @click.stop
+          >
             v{{ store.getters.APP_VERSION }}
           </li>
           <li :class="[{'bg-emerald-500 text-white hover:!bg-emerald-400': route.fullPath === item.link }, 'border-b hover:bg-gray-100 hover:cursor-pointer transition duration-300']"

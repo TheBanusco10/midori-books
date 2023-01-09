@@ -48,7 +48,7 @@
                    :value="book.categories"
       >
         <template v-slot:multiplelabel="{ values }">
-          <div class="multiselect-multiple-label">
+          <div class="multiselect-multiple-label whitespace-nowrap overflow-hidden">
             <span v-for="(item, index) in values"
                   class="bg-gray-300 rounded mr-2 p-1"
                   :key="index"
@@ -59,7 +59,7 @@
         </template>
       </multiselect>
       <button @click="updateBookByID(bookID, toRaw(book))"
-              :class="[loading ? 'opacity-50 pointer-events-none' : '', `w-full mt-4 text-white p-2 rounded bg-emerald-500
+              :class="[loading ? 'opacity-50 pointer-events-none' : '', `w-full my-4 text-white p-2 rounded bg-emerald-500
               hover:bg-emerald-600 transition duration`]"
               :disabled="loading"
       >Edit</button>
