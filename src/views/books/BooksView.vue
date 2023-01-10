@@ -13,7 +13,7 @@
    </section>
    <div id="filters"
         class="mt-4 mb-6"
-        v-if="!loadingBooks"
+        v-if="!loadingBooks && books.length !== 0"
    >
      <Filter :total-items="toRaw(books)"
              :filter-items="uniqueBookCategories"
@@ -22,6 +22,10 @@
              class="text-center"
      />
    </div>
+   <Badge class="my-4 text-center">
+     <template v-slot:title>Total books</template>
+     <template v-slot:badge>{{ books.length }}</template>
+   </Badge>
    <div class="flex flex-wrap justify-center gap-4"
    >
      <Loader v-if="loadingBooks && !searching" />
@@ -60,6 +64,7 @@ import Searchbar from "@/components/Searchbar.vue";
 import Filter from "@/components/Filter.vue";
 import {PlusIcon} from "@heroicons/vue/24/outline";
 import {useRouter} from "vue-router";
+import Badge from "@/components/tags/Badge.vue";
 
 const router = useRouter();
 const store = useStore();
