@@ -1,6 +1,6 @@
 <template>
   <section class="relative">
-    <img class="brightness-50 lg:w-full lg:h-screen"
+    <img class="brightness-50 h-80 lg:w-full lg:h-screen"
          :src="require('@/assets/img/books-banner.webp')"
          alt="Banner"
     >
