@@ -1,5 +1,6 @@
 <template>
- <Container>
+  <Header title="Your books" />
+  <Container>
    <section class="w-full flex justify-center items-center">
      <Searchbar class="my-4"
                 :total-items="toRaw(books)"
@@ -65,6 +66,7 @@ import Filter from "@/components/Filter.vue";
 import {PlusIcon} from "@heroicons/vue/24/outline";
 import {useRouter} from "vue-router";
 import Badge from "@/components/tags/Badge.vue";
+import Header from "@/components/tags/Header.vue";
 
 const router = useRouter();
 const store = useStore();

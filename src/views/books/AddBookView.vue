@@ -1,9 +1,5 @@
 <template>
-  <Header>
-    <template v-slot:title>
-      <p class="text-center text-2xl -mt-3">New book</p>
-    </template>
-  </Header>
+  <Header title="New book" />
   <Container class="flex flex-wrap justify-center mt-10">
     <div class="w-full lg:w-2/12 mb-4 border-b lg:border-r
     lg:border-b-0 lg:border-r lg:pr-3"

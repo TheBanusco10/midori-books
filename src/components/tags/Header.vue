@@ -8,7 +8,9 @@
       </button>
     </div>
     <div>
-      <slot name="title" />
+      <p class="text-center text-2xl -mt-3">
+        {{ title }}
+      </p>
     </div>
   </section>
 </template>
@@ -16,6 +18,14 @@
 <script setup>
 import {ArrowLeftIcon} from "@heroicons/vue/24/outline";
 import {useRouter} from "vue-router";
+
+defineProps({
+  title: {
+    type: String,
+    default: '',
+    required: true
+  }
+})
 
 const router = useRouter();
 </script>
