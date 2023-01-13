@@ -10,6 +10,13 @@
            alt="Book image"
            @error="onImageError"
       >
+      <Input type="date"
+             v-model="bookStartedAt"
+             :value="bookStartedAt"
+             placeholder="Started reading at"
+             min="1990-01-01"
+             :max="dayjs().format('YYYY-MM-DD')"
+      />
       <Input type="url"
              v-model="book.imageURL"
              placeholder="Image URL"
@@ -68,6 +75,7 @@ import Multiselect from "@vueform/multiselect";
 import Container from "@/components/tags/Container.vue";
 import Input from "@/components/tags/Input.vue";
 import Header from "@/components/tags/Header.vue";
+import dayjs from "dayjs";
 
 const store = useStore();
 const router = useRouter();
@@ -79,8 +87,10 @@ const book = ref({
   author: '',
   imageURL: '',
   synopsis: '',
-  categories: []
+  categories: [],
+  updatedAt: dayjs().valueOf().toString(),
 });
+const bookStartedAt = ref(dayjs().format('YYYY-MM-DD'));
 const loading = ref(false);
 
 const addBook = async () => {
@@ -90,6 +100,7 @@ const addBook = async () => {
 
     const bookObject = {
       ...book.value,
+      startedAt: dayjs(bookStartedAt.value).valueOf().toString(),
       uid: user.value.uid
     }
 

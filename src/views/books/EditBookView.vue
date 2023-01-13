@@ -10,6 +10,13 @@
            alt="Book image"
            @error="onImageError"
       >
+      <Input type="date"
+             v-model="book.startedAt"
+             :value="book.startedAt"
+             placeholder="Started reading at"
+             min="1990-01-01"
+             :max="dayjs().format('YYYY-MM-DD')"
+      />
       <Input type="url"
              v-model="book.imageURL"
              :value="book.imageURL"
@@ -73,6 +80,7 @@ import Header from "@/components/tags/Header.vue";
 import Input from "@/components/tags/Input.vue";
 import Multiselect from "@vueform/multiselect";
 import {isEmpty, isNull} from "lodash/lang";
+import dayjs from "dayjs";
 
 const store = useStore();
 const route = useRoute();
@@ -86,9 +94,13 @@ const loading = ref(false);
 onBeforeMount(async () => {
   try {
     book.value = await getBookByID(bookID);
+
     if (!book.value) {
       await router.push({name: 'books'});
     }
+
+    const startedAt = isNaN(parseInt(book.value.startedAt)) ? dayjs() : dayjs(parseInt(book.value.startedAt));
+    book.value.startedAt = startedAt.format('YYYY-MM-DD');
   }catch (err) {
     console.error(err.message);
   }
@@ -126,6 +138,9 @@ const getBookByID = async (bookID) => {
 const updateBookByID = async (bookID, newBook) => {
   try {
     if (isNull(bookID) || isEmpty(newBook)) return;
+
+    newBook.startedAt = dayjs(newBook.startedAt).valueOf().toString();
+    newBook.updatedAt = dayjs().valueOf().toString();
 
     await updateDoc(doc(db, 'books', bookID), newBook);
 
