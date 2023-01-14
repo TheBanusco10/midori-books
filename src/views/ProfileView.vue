@@ -1,6 +1,6 @@
 <template>
-  <Header />
-  <Container class="relative -mt-16 flex flex-wrap flex-col justify-center items-center md:flex-row">
+  <Header title="" />
+  <Container class="min-h-[calc(100vh-62px)] relative -mt-16 flex flex-wrap flex-col lg:justify-center lg:items-start md:flex-row">
     <section class="w-full lg:w-4/12 text-center">
       <img :src="user.photoURL"
            class="h-20 h-20 rounded-full shadow-lg m-auto mb-2"
@@ -18,7 +18,7 @@
             class="mt-4"
       >
         <Tab name="Settings">
-          <p>Your settings</p>
+          <Authors />
         </Tab>
         <Tab name="Import tool">
           <p>Import your books from <span class="italic">.json</span> file. The file must contain the following
@@ -42,6 +42,7 @@ import Header from "@/components/tags/Header.vue";
 import Container from "@/components/tags/Container.vue";
 import Card from "@/components/tags/Card.vue";
 import ImportFile from "@/components/ImportFile.vue";
+import Authors from "@/components/Authors.vue";
 
 const store = useStore();
 
