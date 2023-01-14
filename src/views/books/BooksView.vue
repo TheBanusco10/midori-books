@@ -6,7 +6,7 @@
                 :total-items="toRaw(books)"
                 @results="getResults"
      />
-     <button @click="router.push('/books/add')"
+     <button @click="router.push('/books/add'); scrollToTop"
              class="bg-emerald-600 shadow-lg rounded-full p-3 fixed bottom-4 right-4 md:relative md:inset-0 hover:bg-emerald-500 transition duration-300"
      >
        <PlusIcon class="w-5 h-5 text-white"/>
@@ -55,7 +55,7 @@
 <script setup>
 import {query, getDocs, collection, where, doc, deleteDoc, getDoc} from "firebase/firestore";
 import {useStore} from "vuex";
-import {computed, onMounted, ref, toRaw} from "vue";
+import {computed, getCurrentInstance, onMounted, ref, toRaw} from "vue";
 
 import Container from "@/components/tags/Container.vue";
 import {db} from "@/firebase";
@@ -81,6 +81,8 @@ const booksSearched = ref([]);
 const loadingBooks = ref(true);
 const loadingAction = ref(false);
 const searching = ref(false);
+
+const scrollToTop = getCurrentInstance().appContext.config.globalProperties.$scrollToTop;
 
 const getBooks = async () => {
   try {
@@ -178,6 +180,7 @@ const onRemoveBook = async (bookID) => {
 
 const onEditBook = bookID => {
   router.push({ name: 'editBook', params: { id: bookID } });
+  scrollToTop();
 }
 
 onMounted(() => {
