@@ -2,12 +2,12 @@
   <Header title="Your books" />
   <Container>
    <section class="w-full flex justify-center items-center">
-     <Searchbar class="my-4"
+     <Searchbar class="w-full my-4 md:w-auto"
                 :total-items="toRaw(books)"
                 @results="getResults"
      />
      <button @click="router.push('/books/add')"
-             class="bg-emerald-600 shadow-lg rounded-full p-3 hover:bg-emerald-500 transition duration-300"
+             class="bg-emerald-600 shadow-lg rounded-full p-3 fixed bottom-4 right-4 md:relative md:inset-0 hover:bg-emerald-500 transition duration-300"
      >
        <PlusIcon class="w-5 h-5 text-white"/>
      </button>

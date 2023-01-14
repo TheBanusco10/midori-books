@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <input type="text"
-           class="shadow border-2 rounded-lg p-2 mr-5 pl-8 outline-none focus:border-emerald-500 hover:shadow transition duration-300"
+           class="w-full shadow border-2 rounded-lg p-2 pl-8 outline-none md:w-auto md:mr-5 focus:border-emerald-500 hover:shadow transition duration-300"
            placeholder="Search for Title or Author"
            @input="searching"
     >
