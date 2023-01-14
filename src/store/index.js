@@ -2,10 +2,11 @@ import { createStore } from 'vuex'
 
 import VueCookies from "vue-cookies";
 import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-import {auth} from "@/firebase";
+import {auth, db} from "@/firebase";
 import router from "@/router";
+import {collection, getDocs, query, where} from "firebase/firestore";
 
-export default createStore({
+const store = createStore({
   state: {
     APP_VERSION: process.env.VUE_APP_VERSION,
     user: VueCookies.get('midori-books') || null,
@@ -29,6 +30,7 @@ export default createStore({
       'Thrillers',
       'War',
     ],
+    userAuthors: [],
   },
   getters: {
     APP_VERSION: state => {
@@ -42,6 +44,9 @@ export default createStore({
     },
     bookCategories: state => {
       return state.bookCategories;
+    },
+    userAuthors: state => {
+      return state.userAuthors;
     }
   },
   mutations: {
@@ -60,7 +65,20 @@ export default createStore({
       if (index === -1 ) return;
 
       state.books.splice(index, 1);
-    }
+    },
+    setUserAuthors: (state, authors) => {
+      state.userAuthors = authors;
+    },
+    addUserAuthor: (state, author) => {
+      state.userAuthors.push(author);
+    },
+    removeUserAuthor: (state, authorID) => {
+      const index = state.userAuthors.findIndex(author => author.id === authorID);
+
+      if (index === -1 ) return;
+
+      state.userAuthors.splice(index, 1);
+    },
   },
   actions: {
     signInWithGoogle: async ({state, commit}) => {
@@ -82,6 +100,31 @@ export default createStore({
       }catch (err) {
         console.error(err.message);
       }
+    },
+    getUserAuthorsByID: async ({state, commit}, userID) => {
+      try {
+        const q = query(collection(db, 'authors'), where('uid', '==', userID));
+        const querySnapshot = await getDocs(q);
+
+        const authors = [];
+
+        querySnapshot.forEach(author => {
+          authors.push({
+            id: author.id,
+            ...author.data()
+          });
+        });
+
+        commit('setUserAuthors', authors);
+      }catch (err) {
+        console.error(err.message);
+      }
+
     }
   },
-})
+});
+
+// Initial calls for some states
+store.dispatch('getUserAuthorsByID', store.getters.user.uid);
+
+export default store;

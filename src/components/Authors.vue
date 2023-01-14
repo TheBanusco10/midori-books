@@ -1,11 +1,17 @@
 <template>
   <p>Your authors</p>
+  <section>
+    <span class="bg-gray-300 rounded mr-2 p-1" v-for="({author, id}, index) in userAuthors" :key="index">
+      {{ author }}
+      <button @click="removeAuthor(id)">Remove</button>
+    </span>
+  </section>
   <div>
     <Input type="text"
            placeholder="Author name"
            v-model="author"
     />
-    <Button @click="button"
+    <Button @click="addAuthor"
             :disabled="author.length === 0"
     >
       Add
@@ -14,37 +20,57 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
-import {query, where, collection, getDocs} from "firebase/firestore";
+import {computed, ref} from "vue";
+import {collection, addDoc, deleteDoc, getDoc, doc} from "firebase/firestore";
+import {db} from "@/firebase";
+import {useStore} from "vuex";
 
 import Input from "@/components/tags/Input.vue";
 import Button from "@/components/tags/Button.vue";
-import {db} from "@/firebase";
+
+const store = useStore();
 
 const author = ref('');
+const userAuthors = computed(() => store.getters.userAuthors);
 
-const getUserAuthorsByID = async userID => {
+const user = computed(() => store.getters.user);
+
+const addAuthor = async () => {
   try {
-    const q = query(collection(db, 'authors'), where('uid', '==', userID));
-    const querySnapshot = await getDocs(q);
+    const authorObject = {
+      author: author.value,
+      uid: user.value.uid
+    }
 
-    const authors = [];
+    const data = await addDoc(collection(db, 'authors'), authorObject);
 
-    querySnapshot.forEach(author => {
-      authors.push({
-        id: author.id,
-        ...author.data()
-      });
+    store.commit('addUserAuthor', {
+      ...authorObject,
+      id: data.id
     });
 
-    return authors;
+    alert('Author stored');
+
+    author.value = '';
   }catch (err) {
     console.error(err.message);
   }
-
 }
 
-const button = () => {
-  console.log('click');
+const removeAuthor = async authorID => {
+  try {
+    const docRef = doc(db, 'authors', authorID);
+    const author = await getDoc(docRef);
+
+    if (!author.exists()) return;
+
+    await deleteDoc(docRef);
+
+    store.commit('removeUserAuthor', authorID);
+
+    alert('Author removed');
+  }catch (err) {
+    console.error(err.message);
+  }
 }
 </script>
