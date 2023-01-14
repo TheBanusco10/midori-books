@@ -15,7 +15,6 @@ const props = defineProps({
 })
 
 const updateInput = (evt) => {
-  console.log('updating', evt);
   emmit('update:modelValue', evt.target.value);
 }
 </script>
