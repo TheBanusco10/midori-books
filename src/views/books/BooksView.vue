@@ -6,7 +6,7 @@
                 :total-items="toRaw(books)"
                 @results="getResults"
      />
-     <button @click="router.push('/books/add'); scrollToTop"
+     <button @click="router.push('/books/add'); scrollToTop()"
              class="bg-emerald-600 shadow-lg rounded-full p-3 fixed bottom-4 right-4 md:relative md:inset-0 hover:bg-emerald-500 transition duration-300"
      >
        <PlusIcon class="w-5 h-5 text-white"/>
