@@ -1,14 +1,14 @@
 {
   "name": "midori",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "styles": "npx tailwindcss -i src/assets/css/styles.css -o public/styles.css --watch",
-    "local-server": "npm run build && npx http-server dist",
-    "patch": "grunt update_app_version:patch && npm run build",
-    "minor": "grunt update_app_version:minor && npm run build"
+    "local-server": "npx http-server dist",
+    "patch": "grunt update_app_version:patch && npm run build && npm run local-server",
+    "minor": "grunt update_app_version:minor && npm run build && npm run local-server"
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.13",
