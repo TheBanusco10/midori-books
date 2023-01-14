@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex flex-wrap justify-between items-center px-3 pt-3 bg-white shadow">
+  <nav class="sticky top-0 z-10 flex flex-wrap justify-between items-center px-3 pt-3 bg-white shadow">
     <div class="w-2/12">
       <router-link to="/">
         <img class="w-40 pb-2 ml-5 scale-150 md:scale-100 md:ml-0"
