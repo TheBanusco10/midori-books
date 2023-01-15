@@ -4,7 +4,9 @@
               v-for="({author, id}, index) in userAuthors" :key="index"
     >
       {{ author }}
-      <button @click="removeAuthor(id)">
+      <button @click="removeAuthor(id)"
+              :disabled="loading"
+      >
         <XMarkIcon class="p-1 w-6 h-6" />
       </button>
     </SpanItem>
@@ -16,7 +18,7 @@
            v-model="author"
     />
     <Button @click="addAuthor"
-            :disabled="author.length === 0"
+            :disabled="author.length === 0 || loading"
     >
       Add
     </Button>
@@ -38,13 +40,18 @@ const store = useStore();
 
 const author = ref('');
 const userAuthors = computed(() => store.getters.userAuthors);
+const userAuthorsName = computed(() => store.getters.userAuthors.map(el => el.author));
 
 const user = computed(() => store.getters.user);
 
+const loading = ref(false);
+
 const addAuthor = async () => {
-  if (userAuthors.value.author.includes(author.value)) return;
+  if (userAuthorsName.value.length !== 0 && userAuthorsName.value.includes(author.value)) return;
 
   try {
+    loading.value = true;
+
     const authorObject = {
       author: author.value,
       uid: user.value.uid
@@ -62,11 +69,15 @@ const addAuthor = async () => {
     author.value = '';
   }catch (err) {
     console.error(err.message);
+  }finally {
+    loading.value = false;
   }
 }
 
 const removeAuthor = async authorID => {
   try {
+    loading.value = true;
+
     const docRef = doc(db, 'authors', authorID);
     const author = await getDoc(docRef);
 
@@ -79,6 +90,8 @@ const removeAuthor = async authorID => {
     alert('Author removed');
   }catch (err) {
     console.error(err.message);
+  }finally {
+    loading.value = false;
   }
 }
 </script>
