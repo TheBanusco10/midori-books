@@ -36,11 +36,15 @@
                 class="w-full border rounded p-2 mb-4 h-44 max-h-44 focus:outline-none focus:border-emerald-500
                 transition duration-300"
       ></textarea>
-      <Input type="text"
-             v-model="book.author"
-             placeholder="Author"
-             :value="book.author"
+      <multiselect  v-model="book.author"
+                    :options="userAuthors.map(el => el.author)"
+                    :value="book.author"
+                    placeholder="Author"
+                    class="!mb-4"
       />
+      <HintText v-if="userAuthors.length === 0">
+        It seems your authors list is empty. Go to your profile and add a new one
+      </HintText>
       <multiselect v-model="book.categories"
                    placeholder="Category"
                    :options="bookCategories"
@@ -81,6 +85,7 @@ import Multiselect from "@vueform/multiselect";
 import {isEmpty, isNull} from "lodash/lang";
 import dayjs from "dayjs";
 import SpanItem from "@/components/tags/SpanItem.vue";
+import HintText from "@/components/tags/HintText";
 
 const store = useStore();
 const route = useRoute();
@@ -89,6 +94,7 @@ const router = useRouter();
 const bookID = route.params.id;
 const book = ref({});
 const bookCategories = computed(() => store.getters.bookCategories);
+const userAuthors = computed(() => store.getters.userAuthors);
 const loading = ref(false);
 
 onBeforeMount(async () => {

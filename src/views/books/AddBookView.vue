@@ -22,7 +22,9 @@
              placeholder="Image URL"
              class="!mb-2"
       />
-      <span class="inline-block text-sm text-gray-500 mb-3 pl-1 italic">Paste your image URL here</span>
+      <HintText>
+        Paste your image URL here
+      </HintText>
     </div>
     <div class="w-full lg:w-10/12 lg:pl-3">
       <Input type="text"
@@ -34,10 +36,14 @@
                 class="w-full border rounded p-2 mb-4 h-44 max-h-44 focus:outline-none focus:border-emerald-500
                 transition duration-300"
       ></textarea>
-      <Input type="text"
-             v-model="book.author"
-             placeholder="Author"
+      <multiselect  v-model="book.author"
+                    :options="userAuthors.map(el => el.author)"
+                    placeholder="Author"
+                    class="!mb-4"
       />
+      <HintText v-if="userAuthors.length === 0">
+        It seems your authors list is empty. Go to your profile and add a new one
+      </HintText>
       <multiselect v-model="book.categories"
                    placeholder="Category"
                    :options="categories"
@@ -69,13 +75,14 @@ import {addDoc, collection} from "firebase/firestore";
 import {useStore} from "vuex";
 import {db} from "@/firebase";
 import {useRouter} from "vue-router";
+import dayjs from "dayjs";
 
 import Multiselect from "@vueform/multiselect";
 import Container from "@/components/tags/Container.vue";
 import Input from "@/components/tags/Input.vue";
 import Header from "@/components/tags/Header.vue";
-import dayjs from "dayjs";
 import SpanItem from "@/components/tags/SpanItem.vue";
+import HintText from "@/components/tags/HintText.vue";
 
 const store = useStore();
 const router = useRouter();
@@ -90,6 +97,7 @@ const book = ref({
   categories: [],
   updatedAt: dayjs().valueOf().toString(),
 });
+const userAuthors = computed(() => store.getters.userAuthors);
 const bookStartedAt = ref(dayjs().format('YYYY-MM-DD'));
 const loading = ref(false);
 

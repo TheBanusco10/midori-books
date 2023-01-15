@@ -1,10 +1,14 @@
 <template>
-  <p>Your authors</p>
-  <section>
-    <SpanItem v-for="({author, id}, index) in userAuthors" :key="index">
+  <section class="my-4 flex">
+    <SpanItem class="flex items-center"
+              v-for="({author, id}, index) in userAuthors" :key="index"
+    >
       {{ author }}
-      <button @click="removeAuthor(id)">Remove</button>
+      <button @click="removeAuthor(id)">
+        <XMarkIcon class="p-1 w-6 h-6" />
+      </button>
     </SpanItem>
+    <span v-if="userAuthors.length === 0">You don't have authors yet, start adding a new one</span>
   </section>
   <div>
     <Input type="text"
@@ -24,6 +28,7 @@ import {computed, ref} from "vue";
 import {collection, addDoc, deleteDoc, getDoc, doc} from "firebase/firestore";
 import {db} from "@/firebase";
 import {useStore} from "vuex";
+import {XMarkIcon} from "@heroicons/vue/24/outline";
 
 import Input from "@/components/tags/Input.vue";
 import Button from "@/components/tags/Button.vue";
@@ -37,6 +42,8 @@ const userAuthors = computed(() => store.getters.userAuthors);
 const user = computed(() => store.getters.user);
 
 const addAuthor = async () => {
+  if (userAuthors.value.author.includes(author.value)) return;
+
   try {
     const authorObject = {
       author: author.value,

@@ -5,6 +5,7 @@ import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import {auth, db} from "@/firebase";
 import router from "@/router";
 import {collection, getDocs, query, where} from "firebase/firestore";
+import {isNull} from "lodash/lang";
 
 const store = createStore({
   state: {
@@ -81,7 +82,7 @@ const store = createStore({
     },
   },
   actions: {
-    signInWithGoogle: async ({state, commit}) => {
+    signInWithGoogle: async ({state, commit, dispatch}) => {
       if (state.user) return;
 
       try {
@@ -96,12 +97,15 @@ const store = createStore({
         VueCookies.set('midori-books', userObject, '1d');
         commit('setUser', userObject);
 
+        await dispatch('getUserAuthorsByID', uid);
         await router.push({name: 'books'});
       }catch (err) {
         console.error(err.message);
       }
     },
     getUserAuthorsByID: async ({state, commit}, userID) => {
+      if (isNull(userID)) return;
+
       try {
         const q = query(collection(db, 'authors'), where('uid', '==', userID));
         const querySnapshot = await getDocs(q);
@@ -125,6 +129,6 @@ const store = createStore({
 });
 
 // Initial calls for some states
-store.dispatch('getUserAuthorsByID', store.getters.user.uid);
+store.dispatch('getUserAuthorsByID', store.getters.user?.uid);
 
 export default store;

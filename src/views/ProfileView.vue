@@ -18,6 +18,7 @@
             class="mt-4"
       >
         <Tab name="Settings">
+          <p class="text-xl">Your authors</p>
           <Authors />
         </Tab>
         <Tab name="Import tool">
