@@ -46,12 +46,11 @@
       >
         <template v-slot:multiplelabel="{ values }">
           <div class="multiselect-multiple-label">
-            <span v-for="(item, index) in values"
-                  class="bg-gray-300 rounded mr-2 p-1"
+            <SpanItem v-for="(item, index) in values"
                   :key="index"
             >
               {{ item.value }}
-            </span>
+            </SpanItem>
           </div>
         </template>
       </multiselect>
@@ -76,6 +75,7 @@ import Container from "@/components/tags/Container.vue";
 import Input from "@/components/tags/Input.vue";
 import Header from "@/components/tags/Header.vue";
 import dayjs from "dayjs";
+import SpanItem from "@/components/tags/SpanItem.vue";
 
 const store = useStore();
 const router = useRouter();

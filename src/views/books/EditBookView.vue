@@ -50,12 +50,11 @@
       >
         <template v-slot:multiplelabel="{ values }">
           <div class="multiselect-multiple-label whitespace-nowrap overflow-hidden">
-            <span v-for="(item, index) in values"
-                  class="bg-gray-300 rounded mr-2 p-1"
+            <SpanItem v-for="(item, index) in values"
                   :key="index"
             >
               {{ item.value }}
-            </span>
+            </SpanItem>
           </div>
         </template>
       </multiselect>
@@ -81,6 +80,7 @@ import Input from "@/components/tags/Input.vue";
 import Multiselect from "@vueform/multiselect";
 import {isEmpty, isNull} from "lodash/lang";
 import dayjs from "dayjs";
+import SpanItem from "@/components/tags/SpanItem.vue";
 
 const store = useStore();
 const route = useRoute();

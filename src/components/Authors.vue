@@ -1,10 +1,10 @@
 <template>
   <p>Your authors</p>
   <section>
-    <span class="bg-gray-300 rounded mr-2 p-1" v-for="({author, id}, index) in userAuthors" :key="index">
+    <SpanItem v-for="({author, id}, index) in userAuthors" :key="index">
       {{ author }}
       <button @click="removeAuthor(id)">Remove</button>
-    </span>
+    </SpanItem>
   </section>
   <div>
     <Input type="text"
@@ -27,6 +27,7 @@ import {useStore} from "vuex";
 
 import Input from "@/components/tags/Input.vue";
 import Button from "@/components/tags/Button.vue";
+import SpanItem from "@/components/tags/SpanItem.vue";
 
 const store = useStore();
 
