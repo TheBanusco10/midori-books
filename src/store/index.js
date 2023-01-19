@@ -32,6 +32,11 @@ const store = createStore({
       'War',
     ],
     userAuthors: [],
+    alert: {
+      type: 'success',
+      message: 'Default alert',
+      showAlert: false,
+    }
   },
   getters: {
     APP_VERSION: state => {
@@ -48,6 +53,9 @@ const store = createStore({
     },
     userAuthors: state => {
       return state.userAuthors;
+    },
+    alert: state => {
+      return state.alert;
     }
   },
   mutations: {
@@ -80,6 +88,12 @@ const store = createStore({
 
       state.userAuthors.splice(index, 1);
     },
+    showAlert: (state, payload) => {
+      state.alert = payload;
+    },
+    hideAlert: (state, payload) => {
+      state.alert.showAlert = false;
+    }
   },
   actions: {
     signInWithGoogle: async ({state, commit, dispatch}) => {
