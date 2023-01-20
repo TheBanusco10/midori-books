@@ -2,9 +2,8 @@
   <Header title="New book" />
   <Container class="flex flex-wrap justify-center mt-10">
     <div class="w-full lg:w-2/12 mb-4 border-b lg:border-r
-    lg:border-b-0 lg:border-r lg:pr-3"
+    lg:border-b-0 lg:pr-3"
     >
-      <!--https://kbimages1-a.akamaihd.net/909b88f6-425d-4535-9925-8e9bcfa90f9b/1200/1200/False/harry-potter-y-la-piedra-filosofal-1.jpg-->
       <img class="w-32 h-48 mx-auto mb-4 rounded shadow object-cover"
            :src="book.imageURL || require('@/assets/img/default-placeholder.png')"
            alt="Book image"
@@ -121,7 +120,10 @@ const addBook = async () => {
 
     await router.push({name: 'books'});
 
-    alert(`Book stored`);
+    store.commit('showAlert', {
+      message: 'Your book has been stored',
+      type: 'success'
+    });
 
     // Empty book data
     book.value.title = '';
@@ -132,6 +134,11 @@ const addBook = async () => {
     // Loading to false
     loading.value = false;
   }catch (err) {
+    store.commit('showAlert', {
+      message: 'There was an error storing your book, try later',
+      type: 'error'
+    });
+
     console.error(err.message);
   }
 }

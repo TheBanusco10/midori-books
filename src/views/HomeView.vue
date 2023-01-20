@@ -1,10 +1,6 @@
 <template>
-  <Transition name="alert" enter-active-class="animate__fadeInDown" leave-active-class="animate__fadeOutUp">
-    <Alert v-if="alert.showAlert" :alert="alert" />
-    <!-- <Alert v-if="true" :alert="alert" /> -->
-  </Transition>
   <section class="relative">
-    <img class="w-full brightness-50 h-80 h-[calc(100vh-62px)] object-cover"
+    <img class="w-full brightness-50 h-[calc(100vh-62px)] object-cover"
          :src="require('@/assets/img/books-banner.webp')"
          alt="Banner"
     >
@@ -38,12 +34,7 @@
 import {useStore} from "vuex";
 import {computed} from "vue";
 
-import Alert from "@/components/tags/Alert.vue";
-
 const store = useStore();
 
 const user = computed(() => store.getters.user);
-const alert = computed(() => {
-  return store.getters.alert;
-});
 </script>

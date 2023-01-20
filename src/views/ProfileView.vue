@@ -3,7 +3,7 @@
   <Container class="min-h-[calc(100vh-62px)] relative -mt-16 flex flex-wrap flex-col lg:justify-center lg:items-start md:flex-row">
     <section class="w-full lg:w-4/12 text-center">
       <img :src="user.photoURL"
-           class="h-20 h-20 rounded-full shadow-lg m-auto mb-2"
+           class="h-20 rounded-full shadow-lg m-auto mb-2"
            :alt="user.displayName"
       >
       <p>

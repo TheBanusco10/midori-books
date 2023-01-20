@@ -1,8 +1,10 @@
 <template>
-    <div class="w-full absolute top-20 z-30 animate__animated">    
-        <div :class="['p-2 w-11/12 mx-auto rounded shadow text-white', colorMap[alert.type]]">
+    <div class="w-full fixed bottom-20 z-30 animate__animated">    
+        <div :class="['p-2 w-11/12 mx-auto rounded shadow-2xl text-white', colorMap[alert.type]]">
             <div class="w-full">
-                <XMarkIcon class="w-5 h-5 ml-auto hover:cursor-pointer" @click="closeAlert" />
+                <XMarkIcon
+                  class="w-5 h-5 ml-auto hover:cursor-pointer"
+                  @click="closeAlert" />
             </div>
             <p>
                 {{ alert.message }}

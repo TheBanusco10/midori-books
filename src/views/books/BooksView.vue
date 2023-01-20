@@ -168,9 +168,16 @@ const onRemoveBook = async (bookID) => {
 
     store.commit('removeBook', bookID);
 
-    alert('Book removed');
+    store.commit('showAlert', {
+      message: 'Book removed from your account',
+      type: 'success'
+    });
   }catch (err) {
     console.error(err.message);
+    store.commit('showAlert', {
+      message: 'There was an error removing your book',
+      type: 'error'
+    });
   }finally {
     loadingAction.value = false;
   }

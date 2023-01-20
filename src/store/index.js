@@ -89,7 +89,10 @@ const store = createStore({
       state.userAuthors.splice(index, 1);
     },
     showAlert: (state, payload) => {
-      state.alert = payload;
+      state.alert = {
+        ...payload,
+        showAlert: true
+      }
     },
     hideAlert: (state, payload) => {
       state.alert.showAlert = false;

@@ -10,12 +10,15 @@
         <XMarkIcon class="p-1 w-6 h-6" />
       </button>
     </SpanItem>
-    <span v-if="userAuthors.length === 0">You don't have authors yet, start adding a new one</span>
+    <HintText v-if="userAuthors.length === 0">
+      You don't have any author yet, start adding a new one
+    </HintText>
   </section>
   <div>
     <Input type="text"
            placeholder="Author name"
            v-model="author"
+           @keydown.enter="addAuthor"
     />
     <Button @click="addAuthor"
             :disabled="author.length === 0 || loading"
@@ -35,6 +38,7 @@ import {XMarkIcon} from "@heroicons/vue/24/outline";
 import Input from "@/components/tags/Input.vue";
 import Button from "@/components/tags/Button.vue";
 import SpanItem from "@/components/tags/SpanItem.vue";
+import HintText from "@/components/tags/HintText.vue";
 
 const store = useStore();
 
@@ -48,6 +52,7 @@ const loading = ref(false);
 
 const addAuthor = async () => {
   if (userAuthorsName.value.length !== 0 && userAuthorsName.value.includes(author.value)) return;
+  if (author.value.length === 0) return;
 
   try {
     loading.value = true;
@@ -64,11 +69,18 @@ const addAuthor = async () => {
       id: data.id
     });
 
-    alert('Author stored');
+    store.commit('showAlert', {
+      message: 'Author added to your account',
+      type: 'success'
+    });
 
     author.value = '';
   }catch (err) {
     console.error(err.message);
+    store.commit('showAlert', {
+      message: 'There was an error adding the Author to your account',
+      type: 'error'
+    });
   }finally {
     loading.value = false;
   }
@@ -87,9 +99,16 @@ const removeAuthor = async authorID => {
 
     store.commit('removeUserAuthor', authorID);
 
-    alert('Author removed');
+    store.commit('showAlert', {
+      message: 'Author removed from your account',
+      type: 'success'
+    });
   }catch (err) {
     console.error(err.message);
+    store.commit('showAlert', {
+      message: 'There was an error removing the Author to your account',
+      type: 'error'
+    });
   }finally {
     loading.value = false;
   }
