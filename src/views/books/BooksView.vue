@@ -21,7 +21,6 @@
              @results="getResults"
              @on-remove-filters="onRemoveFilters"
              />
-             class="text-center"
    </div>
    <Badge class="my-4 text-center">
      <template v-slot:title>Total books</template>
