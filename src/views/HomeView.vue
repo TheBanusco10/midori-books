@@ -1,6 +1,6 @@
 <template>
   <section class="relative">
-    <img class="w-full brightness-50 h-[calc(100vh-62px)] object-cover"
+    <img class="w-full h-[calc(100vh-4rem)] brightness-50 object-cover"
          :src="require('@/assets/img/books-banner.webp')"
          alt="Banner"
     >
